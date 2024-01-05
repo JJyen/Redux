@@ -3,18 +3,18 @@ import {legacy_createStore as createStore} from "redux"
 const ADD = "ADD";
 const DELETE = "DELETE"
 
-//action creator store에서 export
-export const addTodo = (text) => {
+//action creator
+const addTodo = (text) => {
     return {
         type: ADD,
         text,
     }
 };
 
-export const deleteTodo = (id) => {
+const deleteTodo = (id) => {
     return {
         type: DELETE,
-        id,
+        id: parseInt(id),
     }
 }
 
@@ -30,5 +30,12 @@ const reducer = (state=[],action) => {
 };
 
 const store = createStore(reducer);
+
+//action creator store에서 export
+export const actionCreator = {
+    addTodo,
+    deleteTodo
+};
+
 
 export default store;
