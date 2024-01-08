@@ -34,11 +34,11 @@ const storedTodo = JSON.parse(localStorage.getItem("todo"));
 const reducer = (state = storedTodo || null, action) => {
   switch(action.type){
     case ADD:
-      const newTodos = [{text: action.text, id: Date.now()}, ...(state || [])];
+      const newTodos = [{text: action.text, id: Date.now()}, ...(state)];
       localStorage.setItem("todo", JSON.stringify(newTodos));
       return newTodos;
     case DELETE:
-      const delTodo = (state || []).filter(todo => todo.id !== action.id);
+      const delTodo = (state).filter(todo => todo.id !== action.id);
       localStorage.setItem("todo", JSON.stringify(delTodo));
       return delTodo;
     default:
