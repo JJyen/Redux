@@ -18,16 +18,33 @@ const deleteTodo = (id) => {
     }
 }
 
-const reducer = (state=[],action) => {
-    switch(action.type){
-        case ADD:
-            return [{text: action.text, id: Date.now()}, ...state];
-        case DELETE:
-            return state.filter(todo => todo.id !== action.id);
-        default:
-            return state;
-    };
-};
+// const reducer = (state=[],action) => {
+//     switch(action.type){
+//         case ADD:
+//             return [{text: action.text, id: Date.now()}, ...state];
+//         case DELETE:
+//             return state.filter(todo => todo.id !== action.id);
+//         default:
+//             return state;
+//     };
+// };
+
+const storedTodo = JSON.parse(localStorage.getItem("todo"));
+
+const reducer = (state = storedTodo || null, action) => {
+  switch(action.type){
+    case ADD:
+      const newTodos = [{text: action.text, id: Date.now()}, ...(state || [])];
+      localStorage.setItem("todo", JSON.stringify(newTodos));
+      return newTodos;
+    case DELETE:
+      const delTodo = (state || []).filter(todo => todo.id !== action.id);
+      localStorage.setItem("todo", JSON.stringify(delTodo));
+      return delTodo;
+    default:
+      return state;
+  }
+}
 
 const store = createStore(reducer);
 

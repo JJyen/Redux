@@ -7,9 +7,8 @@ const Todo = ({text, id, onBtnClick}) => {
     return (
         
         <li>
-            <Link to={`/${id}`}>
-                {text}<button onClick={onBtnClick}>DEL</button>
-            </Link>
+            <Link to={`/${id}`}>{text}</Link>
+            <button onClick={onBtnClick}>DEL</button>
         </li>
     );
 }

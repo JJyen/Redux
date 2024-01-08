@@ -8,14 +8,14 @@ const Detail = ({todo}) => {
     const _todo = todo.find(__todo => __todo.id === parseInt(myId));
     return (
         <>
-            <h1>{_todo.text}</h1>
+            <h1>{_todo?.text}</h1>
             <h5>Create at: {_todo?.id}</h5>
         </>
     )
 }
 
 const mapStateToProps = (state,ownProps) => {
-    console.log(state, ownProps);
+    console.log("ssss",state, ownProps);
     return {
         todo: state
     }
