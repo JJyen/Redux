@@ -29,9 +29,10 @@ const deleteTodo = (id) => {
 //     };
 // };
 
-const storedTodo = JSON.parse(localStorage.getItem("todo"));
+const storedTodoString = localStorage.getItem("todo");
+const storedTodo = storedTodoString ? JSON.parse(storedTodoString) : [];
 
-const reducer = (state = storedTodo || null, action) => {
+const reducer = (state = storedTodo, action) => {
   switch(action.type){
     case ADD:
       const newTodos = [{text: action.text, id: Date.now()}, ...(state)];
@@ -45,6 +46,7 @@ const reducer = (state = storedTodo || null, action) => {
       return state;
   }
 }
+
 
 const store = createStore(reducer);
 

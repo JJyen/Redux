@@ -4,7 +4,7 @@ import { actionCreator } from "../store";
 import Todo from "../components/Todo";
 
 const Home = ({todos, addTodo}) => {
-    //console.log(todos, addTodo);
+    console.log("todos: ",todos,"addTdo: ", addTodo);
 
     const [text,setText]=useState('');
 
@@ -26,7 +26,7 @@ const Home = ({todos, addTodo}) => {
                 <button>Add</button>
             </form>
             <ul>
-                {todos.map((todo)=>(<Todo {...todo} key={todo.id}/>))}
+                {todos?.map((todo)=>(<Todo {...todo} key={todo.id}/>))}
             </ul>
         </>
     )
@@ -42,5 +42,6 @@ const mapDispatchToProps = (dispatch) => {
         addTodo: text => dispatch(actionCreator.addTodo(text))
     }
 }
+
 
 export default connect(mapStateToProps, mapDispatchToProps) (Home);
