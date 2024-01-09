@@ -29,8 +29,8 @@ const deleteTodo = (id) => {
 //     };
 // };
 
-const storedTodoString = localStorage.getItem("todo");
-const storedTodo = storedTodoString ? JSON.parse(storedTodoString) : [];
+const getStoredTodo = localStorage.getItem("todo");
+const storedTodo = getStoredTodo ? JSON.parse(getStoredTodo) : [];
 
 const reducer = (state = storedTodo, action) => {
   switch(action.type){
