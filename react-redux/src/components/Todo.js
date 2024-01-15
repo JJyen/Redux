@@ -1,11 +1,16 @@
 import React from "react";
-import { connect } from "../../node_modules/react-redux/dist/react-redux";
-import { remove } from "../store";
+import { useDispatch } from "../../node_modules/react-redux/dist/react-redux";
+import { remove } from "../redux/updateTodos";
 import { Link } from "../../node_modules/react-router-dom/dist/index";
 
-const Todo = ({text, id, onBtnClick}) => {
+const Todo = ({text, id}) => {
+    const dispatch = useDispatch();
+
+    const onBtnClick = () => {
+        dispatch(remove(id));
+    }
+    
     return (
-        
         <li>
             <Link to={`/${id}`}>{text}</Link>
             <button onClick={onBtnClick}>DEL</button>
@@ -13,11 +18,4 @@ const Todo = ({text, id, onBtnClick}) => {
     );
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-    console.log(ownProps);
-    return {
-        onBtnClick: () => dispatch(remove(ownProps.id))
-    };
-}
-
-export default connect(null, mapDispatchToProps) (Todo);
+export default Todo;

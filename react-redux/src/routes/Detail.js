@@ -1,11 +1,11 @@
 import React from "react";
-import { connect } from "../../node_modules/react-redux/dist/react-redux";
+import { useSelector } from "../../node_modules/react-redux/dist/react-redux";
 import { useParams } from "../../node_modules/react-router-dom/dist/index";
 
-const Detail = ({todo}) => {
-    console.log(todo);
-    const myId = useParams().id;
-    const _todo = todo.find(__todo => __todo.id === parseInt(myId));
+const Detail = () => {
+    const pageId = useParams().id;
+    const todoDetail = useSelector(state => state.update);
+    const _todo = todoDetail.find(todo =>todo.id === parseInt(pageId));
     return (
         <>
             <h1>{_todo?.text}</h1>
@@ -14,11 +14,4 @@ const Detail = ({todo}) => {
     )
 }
 
-const mapStateToProps = (state,ownProps) => {
-    console.log("ssss",state, ownProps);
-    return {
-        todo: state
-    }
-}
-
-export default connect(mapStateToProps) (Detail);
+export default Detail;

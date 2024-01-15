@@ -1,13 +1,12 @@
 import { useState } from "react";
-import { connect } from "../../node_modules/react-redux/dist/react-redux";
-//import { actionCreator } from "../store";
-import { add } from "../store";
+import { useDispatch, useSelector } from "../../node_modules/react-redux/dist/react-redux";
 import Todo from "../components/Todo";
+import { add } from "../redux/updateTodos";
 
-const Home = ({todos, addTodo}) => {
-    //console.log(todos, addTodo);
-
+const Home = () => {
     const [text,setText]=useState('');
+    const todos = useSelector(state => state.update);
+    const dispatch = useDispatch();
 
     const onChange = (e) => {
         setText(e.target.value)
@@ -16,7 +15,7 @@ const Home = ({todos, addTodo}) => {
     const onSubmit = (e) => {
         e.preventDefault();
         setText("");
-        addTodo(text); //action으로 text 넘겨주기
+        dispatch(add(text)); //action으로 text 넘겨주기
     };
 
     return (
@@ -33,16 +32,5 @@ const Home = ({todos, addTodo}) => {
     )
 }
 
-const mapStateToProps = (state) => {
-    console.log(state);
-    return {todos: state};
-}
 
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        addTodo: text => dispatch(add(text))
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps) (Home);
+export default Home;
