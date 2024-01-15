@@ -1,45 +1,8 @@
-import {legacy_createStore as createStore} from "redux";
-import { createAction, createReducer } from "@reduxjs/toolkit";
+//import {legacy_createStore as createStore} from "redux";
+import { configureStore, createSlice } from "@reduxjs/toolkit";
 
-
-/*const ADD = "ADD";
-const DELETE = "DELETE"
-
-//action creator
-const addTodo = (text) => {
-    return {
-        type: ADD,
-        text,
-    }
-};
-
-const deleteTodo = (id) => {
-    return {
-        type: DELETE,
-        id: parseInt(id),
-    }
-}
-
-const reducer = (state = storedTodo, action) => {
-  switch(action.type){
-    case ADD:
-      const newTodos = [{text: action.text, id: Date.now()}, ...(state)];
-      localStorage.setItem("todo", JSON.stringify(newTodos));
-      return newTodos;
-    case DELETE:
-      const delTodo = (state).filter(todo => todo.id !== action.id);
-      localStorage.setItem("todo", JSON.stringify(delTodo));
-      return delTodo;
-    default:
-      return state;
-  }
-}*/
-
-const addTodo = createAction("ADD");
+/*const addTodo = createAction("ADD");
 const deleteTodo = createAction("DELETE");
-
-const getStoredTodo = localStorage.getItem("todo");
-const storedTodo = getStoredTodo ? JSON.parse(getStoredTodo) : [];
 
 const reducer = createReducer(storedTodo, builder => {
   builder
@@ -53,16 +16,34 @@ const reducer = createReducer(storedTodo, builder => {
       localStorage.setItem("todo", JSON.stringify(delTodo))
       return delTodo;
     })
+})*/
+
+const getStoredTodo = localStorage.getItem("todo");
+const storedTodo = getStoredTodo ? JSON.parse(getStoredTodo) : [];
+
+const todos = createSlice({
+  name: "todosReducer",
+  initialState: storedTodo,
+  reducers: {
+    add: (state, action) => {
+      const newTodos = state.concat({text: action.payload, id: Date.now()});
+      localStorage.setItem("todo",JSON.stringify(newTodos))
+      return newTodos;
+    }, remove: (state, action) => {
+      const delTodo = state.filter(todo => todo.id !== action.payload);
+      localStorage.setItem("todo", JSON.stringify(delTodo))
+      return delTodo;
+    }
+  }
 })
 
+console.log(todos);
+console.log(createSlice);
 
-const store = createStore(reducer);
+export const {add, remove} = todos.actions; 
 
-//action creator store에서 export
-export const actionCreator = {
-    addTodo,
-    deleteTodo
-};
+
+const store = configureStore({reducer: todos.reducer});
 
 
 export default store;
